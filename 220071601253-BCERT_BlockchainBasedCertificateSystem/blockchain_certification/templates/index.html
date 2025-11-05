@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Home · Blockchain Certificates{% endblock %}
+{% block content %}
+<header>
+    <h1>Blockchain Certificate Verification</h1>
+    <p>Issue tamper-proof certificates and verify instantly via QR or ID.</p>
+    {% if not request.session.institution_id %}
+    <div class="btns">
+        <a class="button" href="/login/">Login</a>
+        <a class="button" href="/register/">Register</a>
+    </div>
+    {% else %}
+    <div class="btns">
+        <a class="button" href="/dashboard/">Go to Dashboard</a>
+    </div>
+    {% endif %}
+    <style>.btns{display:flex;gap:12px;margin-top:12px}</style>
+</header>
+
+<section style="margin-top:28px">
+    <h3>Institutions Registered with BCert</h3>
+    <ul>
+        {% for i in institutions %}
+            <li>{{ i.name }}</li>
+        {% empty %}
+            <li>No institutions yet. Be the first to register!</li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}
+
+

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Blockchain Certificates{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script defer src="/static/js/main.js"></script>
+    <style>
+        .navbar{background:#0f172a;color:#fff}
+        .navbar .container{display:flex;gap:16px;align-items:center;justify-content:space-between}
+        .nav-left, .nav-right{display:flex;gap:12px;align-items:center}
+        .brand{font-weight:700}
+        .nav-link{color:#e5e7eb;text-decoration:none;padding:8px 10px;border-radius:8px}
+        .nav-link:hover{background:#1f2937}
+        .back{margin:12px 0}
+        .message{padding:10px 12px;border-radius:8px;margin:8px 0}
+        .msg-success{background:#ecfdf5;color:#065f46}
+        .msg-error{background:#fef2f2;color:#991b1b}
+        .page{max-width:1100px;margin:0 auto;padding:16px}
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-left">
+                <a class="brand nav-link" href="/">{% if current_institution %}{{ current_institution.name }}{% else %}BCert{% endif %}</a>
+                {% if request.session.institution_id %}
+                    <a class="nav-link" href="/dashboard/">Dashboard</a>
+                    <a class="nav-link" href="/issue/">Issue</a>
+                    <a class="nav-link" href="/verify/">Verify</a>
+                    <a class="nav-link" href="/chain/">Chain</a>
+                {% endif %}
+            </div>
+            <div class="nav-right">
+                {% if request.session.institution_id %}
+                    <a class="nav-link" href="/logout/">Logout</a>
+                {% else %}
+                    <a class="nav-link" href="/login/">Login</a>
+                    <a class="nav-link" href="/register/">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container page">
+        {% if not request.path == '/' %}
+            <div class="back"><button class="button button-secondary" onclick="history.back()">Back</button></div>
+        {% endif %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message {% if message.tags == 'success' %}msg-success{% else %}msg-error{% endif %}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
+
+

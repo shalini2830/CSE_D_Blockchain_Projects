@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Reset Data{% endblock %}
+{% block content %}
+<div class="card" style="max-width:520px;margin:24px auto;padding:24px;border:1px solid #e5e7eb;border-radius:12px">
+    <h2>Reset All Data</h2>
+    <p>This will delete all certificates and blocks for YOUR institution only. Use only for debugging.</p>
+    <form method="post" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        {% csrf_token %}
+        <button type="submit" style="background:#b91c1c;color:#fff">Confirm Reset</button>
+        <label style="display:flex;gap:6px;align-items:center"><input type="checkbox" name="logout" value="1"> Logout after reset</label>
+    </form>
+</div>
+{% endblock %}
+

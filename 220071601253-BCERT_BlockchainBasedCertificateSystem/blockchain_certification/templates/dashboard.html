@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+    <header>
+        <h2>Issued Certificates</h2>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <a href="/issue/" class="button">Issue New</a>
+            <form method="get" style="display:flex;gap:8px;align-items:center">
+                <input name="q" value="{{ request.GET.q }}" placeholder="Search by ID, name, course" />
+                <button type="submit">Search</button>
+                <a class="button" href="?export=csv">Export CSV</a>
+                <a class="button" href="/reset/" style="background:#b91c1c">Reset</a>
+            </form>
+        </div>
+    </header>
+    <main>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Student</th>
+                    <th>Course</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in certificates %}
+                <tr>
+                    <td>{{ c.certificate_id }}</td>
+                    <td>{{ c.student_name }}</td>
+                    <td>{{ c.course_name }}</td>
+                    <td>{{ c.issue_date }}</td>
+                    <td>{{ c.status }}</td>
+                    <td>
+                        <a href="/certificate/{{ c.id }}/">Open</a> |
+                        <a href="/certificate/{{ c.id }}/pdf/" target="_blank">PDF</a> |
+                        <form action="/certificate/{{ c.id }}/revoke/" method="post" style="display:inline">
+                            {% csrf_token %}
+                            <button type="submit" style="background:none;border:none;color:#b91c1c;cursor:pointer">Revoke</button>
+                        </form> |
+                        <form action="/certificate/{{ c.id }}/reissue/" method="post" style="display:inline">
+                            {% csrf_token %}
+                            <button type="submit" style="background:none;border:none;color:#065f46;cursor:pointer">Reissue</button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6">No certificates yet.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if page_obj %}
+        <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+            {% if page_obj.has_previous %}<a class="button" href="?page={{ page_obj.previous_page_number }}&q={{ request.GET.q }}">Previous</a>{% endif %}
+            <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}<a class="button" href="?page={{ page_obj.next_page_number }}&q={{ request.GET.q }}">Next</a>{% endif %}
+        </div>
+        {% endif %}
+    </main>
+{% endblock %}
+
+
