@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decentralized Voting System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>🗳️ Decentralized Voting System</h1>
+            <nav>
+                <a href="/">🏠 Home</a>
+                {% if not session.get('role') %}
+                <a href="/login">🔐 Login</a>
+                {% endif %}
+                {% if session.get('role') %}
+                <a href="/logout">🚪 Logout</a>
+                {% endif %}
+                {% if session.get('role') == 'admin' %}
+                <a href="/admin">⚙️ Admin</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

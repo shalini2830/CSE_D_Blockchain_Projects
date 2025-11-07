@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <h1>🗳️ Vote</h1>
+    <form method="POST" action="/vote">
+      <div class="form-group">
+        <label for="contestant_id">Select Contestant:</label>
+        <select name="contestant_id" id="contestant_id" required>
+          {% for contestant in contestants %}
+          <option value="{{ loop.index0 }}">{{ contestant[0] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button type="submit">Cast Vote</button>
+    </form>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class="flashes">
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <h1>📊 Vote Tally</h1>
+    <div class="table-container">
+        <table>
+        <thead>
+        <tr><th>Contestant</th><th>Votes</th></tr>
+        </thead>
+        <tbody>
+        {% for name, votes in contestants %}
+        <tr><td>{{ name }}</td><td>{{ votes }}</td></tr>
+        {% endfor %}
+        </tbody>
+        </table>
+    </div>
+</div>
+
+{% if can_vote %}
+<div class="card vote-form">
+    <h2>🗳️ Cast Your Vote</h2>
+    <form method="POST" action="/vote">
+      <div class="form-group">
+        <label for="contestant_id">Select Contestant:</label>
+        <select name="contestant_id" id="contestant_id" required>
+          {% for contestant in contestants %}
+          <option value="{{ loop.index0 }}">{{ contestant[0] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button type="submit">Vote Now</button>
+    </form>
+</div>
+{% endif %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class="flashes">
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+{% endblock %}

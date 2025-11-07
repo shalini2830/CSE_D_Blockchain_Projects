@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <h1>⚙️ Admin Panel</h1>
+
+    <h3>➕ Add Contestant</h3>
+    <form method="POST" action="/admin">
+      <input type="hidden" name="action" value="add_contestant">
+      <div class="form-group">
+        <label for="name">Contestant Name:</label>
+        <input name="name" id="name" placeholder="Enter contestant name" required>
+      </div>
+      <button type="submit">Add Contestant</button>
+    </form>
+
+    <h3>👤 Register User</h3>
+    <form method="POST" action="/admin">
+      <input type="hidden" name="action" value="register_user">
+      <div class="form-group">
+        <label for="address">User Ethereum Address:</label>
+        <input name="address" id="address" placeholder="0x..." required>
+      </div>
+      <button type="submit">Register User</button>
+    </form>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class="flashes">
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+{% endblock %}
