@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Certificate{% endblock %}
+{% block content %}
+    <div class="wrap" style="max-width:900px;margin:24px auto;padding:24px;border:1px solid #e5e7eb;border-radius:12px;display:grid;grid-template-columns:1fr 220px;gap:24px">
+        <div>
+            <h2>{{ certificate.course_name }}</h2>
+            <p>This certifies that <strong>{{ certificate.student_name }}</strong> successfully completed the course on {{ certificate.issue_date }}.</p>
+            <p><strong>Certificate ID:</strong> {{ certificate.certificate_id }}</p>
+            <p><strong>Status:</strong> {{ certificate.status }}</p>
+            {% if block %}
+            <p><strong>Blockchain Index:</strong> {{ block.index }}</p>
+            {% endif %}
+            <p><a href="{{ verify_url }}">Verify online</a></p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <form action="/certificate/{{ certificate.id }}/revoke/" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Revoke</button>
+                </form>
+                <form action="/certificate/{{ certificate.id }}/reissue/" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Reissue</button>
+                </form>
+            </div>
+        </div>
+        <div>
+            {% if qr_base64 %}
+            <img src="data:image/png;base64,{{ qr_base64 }}" alt="QR Code" style="width:220px;height:220px;border:1px solid #e5e7eb;"/>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+

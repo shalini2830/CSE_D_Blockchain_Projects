@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Login · Blockchain Certificates{% endblock %}
+{% block content %}
+<div class="card" style="max-width:420px;margin:24px auto;padding:24px;border:1px solid #e5e7eb;border-radius:12px">
+    <h2>Institution Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label>Email</label>
+        <input type="email" name="email" required>
+        <label>Password</label>
+        <input type="password" name="password" required>
+        <button type="submit">Login</button>
+    </form>
+    <p style="margin-top:8px">No account? <a href="/register/">Register</a></p>
+</div>
+{% endblock %}
+
+

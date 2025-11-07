@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Verify{% endblock %}
+{% block content %}
+<div class="form" style="max-width:520px;margin:24px auto;padding:24px;border:1px solid #e5e7eb;border-radius:12px">
+    <h2>Verify Certificate</h2>
+    <form method="post" data-preserve="true" id="verify-form">
+        {% csrf_token %}
+        <label>Certificate ID</label>
+        <input name="certificate_id" required>
+        <button type="submit">Verify</button>
+    </form>
+</div>
+{% endblock %}
+
+

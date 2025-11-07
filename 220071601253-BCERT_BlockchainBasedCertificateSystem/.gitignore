@@ -1,0 +1,60 @@
+# --------------------
+# General Operating System Files
+# --------------------
+.DS_Store
+Thumbs.db
+
+# --------------------
+# Python and Virtual Environments
+# --------------------
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+.venv
+venv/
+env/
+pip-log.txt
+
+# --------------------
+# Django Specific Files
+# --------------------
+# SQLite database file
+db.sqlite3
+*.log
+
+# Media files that are user-uploaded
+/media/
+
+# Static files that are collected during deployment
+/static/
+
+# Django secret key (crucial for production security)
+# Make sure your SECRET_KEY is loaded from .env and not committed!
+
+# --------------------
+# Configuration and Environment Variables (SECURITY CRITICAL)
+# --------------------
+# These contain API keys, database credentials, and blockchain keys
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+/wallets
+
+# --------------------
+# Blockchain & Smart Contract Development
+# --------------------
+# Compiled contract artifacts (ABI and Bytecode)
+/contracts/build/
+/contracts/artifacts/
+# Local blockchain data (e.g., from Ganache)
+ganache-data.json
+
+# --------------------
+# IDE and Editor Configuration
+# --------------------
+.vscode/
+.idea/
+*.sublime-workspace

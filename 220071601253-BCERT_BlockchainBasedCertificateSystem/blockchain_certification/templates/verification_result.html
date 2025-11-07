@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Verification Result{% endblock %}
+{% block content %}
+    <div class="card" style="max-width:840px;margin:24px auto;padding:24px;border:1px solid #e5e7eb;border-radius:12px">
+        {% if valid %}
+        <h2 style="color:#059669">✅ Verified on Blockchain</h2>
+        {% else %}
+        <h2 style="color:#dc2626">❌ Invalid or Tampered</h2>
+        {% endif %}
+
+        {% if certificate %}
+        <h3>Certificate</h3>
+        <p><strong>ID:</strong> {{ certificate.certificate_id }}</p>
+        <p><strong>Student:</strong> {{ certificate.student_name }}</p>
+        <p><strong>Course:</strong> {{ certificate.course_name }}</p>
+        <p><strong>Date:</strong> {{ certificate.issue_date }}</p>
+        <p><strong>Status:</strong> {{ certificate.status }}</p>
+        {% endif %}
+
+        {% if block %}
+        <h3>Block</h3>
+        <p><strong>Index:</strong> {{ block.index }}</p>
+        <p><strong>Timestamp:</strong> {{ block.timestamp }}</p>
+        <p><strong>Issuer:</strong> {{ block.issuer }}</p>
+        <p><strong>Previous Hash:</strong> {{ block.previous_hash }}</p>
+        {% endif %}
+    </div>
+{% endblock %}
+
+

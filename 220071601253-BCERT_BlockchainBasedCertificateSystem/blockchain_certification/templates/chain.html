@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Blockchain{% endblock %}
+{% block content %}
+    <header>
+        <h2>Blockchain</h2>
+        {% if valid %}<span style="color:#059669">Chain is valid</span>{% else %}<span style="color:#dc2626">Chain invalid</span>{% endif %}
+    </header>
+    <main style="display:block;margin:24px 0;max-width:980px">
+        {% for b in chain %}
+        <div style="border:1px solid #e5e7eb;padding:16px;border-radius:12px;margin-bottom:16px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.04)">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                <span style="display:inline-block;padding:4px 8px;border-radius:999px;background:#e5e7eb">#{{ b.index }}</span>
+                <span style="color:#6b7280">{{ b.timestamp }}</span>
+            </div>
+            <div><strong>Issuer:</strong> {{ b.issuer }}</div>
+            <div style="word-break:break-word;overflow-wrap:anywhere"><strong>Cert Hash:</strong> <span style="font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace">{{ b.certificate_hash }}</span></div>
+            <div style="word-break:break-word;overflow-wrap:anywhere"><strong>Prev Hash:</strong> <span style="font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace">{{ b.previous_hash }}</span></div>
+            <div><strong>Nonce:</strong> {{ b.nonce }}</div>
+        </div>
+        {% empty %}
+        <p>No blocks yet.</p>
+        {% endfor %}
+    </main>
+{% endblock %}
+
+
