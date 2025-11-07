@@ -1,6 +1,18 @@
-# Blockchain Attendance System (SQLite) — Improved UI & Messages
+# Team members
+NAME: SHAMSU NISHA N
+RRN:220071601235
+NAME:SHARMILA D
+RRN:220071601236
+NAME:THARANI V S
+RRN:220071601235
 
-Features added in this version:
+
+
+# Blockchain Attendance System
+
+Features
+-Database connection
+-Block hashes
 - Flask flash messages for success / already-marked warnings
 - Attendance duplication prevention (per calendar day)
 - Clean Bootstrap-based UI for better presentation
