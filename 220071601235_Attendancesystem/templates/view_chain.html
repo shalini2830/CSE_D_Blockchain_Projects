@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <h4>Blockchain</h4>
+    {% for block in chain %}
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5>Block {{ block.index }} — <small class="text-muted">{{ block.timestamp }}</small></h5>
+          <pre style="white-space:pre-wrap;">{{ block | tojson(indent=2) }}</pre>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

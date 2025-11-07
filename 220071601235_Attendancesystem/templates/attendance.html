@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <h4>Attendance Records</h4>
+    <table class="table table-striped">
+      <thead><tr><th>Name</th><th>Roll</th><th>Timestamp</th><th>Block Hash</th></tr></thead>
+      <tbody>
+        {% for att, stu in records %}
+        <tr>
+          <td>{{ stu.name }}</td>
+          <td>{{ stu.roll }}</td>
+          <td>{{ att.timestamp|format_datetime }}</td>
+          <td style="max-width:240px; overflow:hidden; text-overflow:ellipsis;">{{ att.block_hash }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

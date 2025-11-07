@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+  <div class="col-md-7">
+    <div class="card mb-4">
+      <div class="card-body">
+        <h4 class="card-title">Registered Students</h4>
+        {% if not students %}
+          <p>No students registered yet. <a href="{{ url_for('register') }}">Register now</a>.</p>
+        {% else %}
+          <table class="table table-hover">
+            <thead><tr><th>Name</th><th>Roll</th><th>Action</th></tr></thead>
+            <tbody>
+              {% for s in students %}
+              <tr>
+                <td>{{ s.name }}</td>
+                <td>{{ s.roll }}</td>
+                <td>
+                  <form method="post" action="{{ url_for('mark_attendance') }}" style="display:inline;">
+                    <input type="hidden" name="student_id" value="{{ s.id }}">
+                    <button class="btn btn-sm btn-success">Mark Attendance</button>
+                  </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h5>Recent Attendance</h5>
+        {% if not recent %}
+          <p>No attendance records yet.</p>
+        {% else %}
+          <ul class="list-group">
+            {% for att, stu in recent %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <strong>{{ stu.name }}</strong> — {{ stu.roll }}
+                  <div class="text-muted small">at {{ att.timestamp|format_datetime }}</div>
+                </div>
+                <span class="badge bg-secondary text-truncate" style="max-width:200px;">{{ att.block_hash }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-5">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Quick Actions</h5>
+        <p>Add a student or view full attendance records.</p>
+        <a href="{{ url_for('register') }}" class="btn btn-primary mb-2">Register Student</a>
+        <a href="{{ url_for('attendance_records') }}" class="btn btn-outline-primary mb-2">View Records</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
