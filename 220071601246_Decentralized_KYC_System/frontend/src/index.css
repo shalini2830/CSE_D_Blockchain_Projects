@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto&display=swap');
+
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  overflow-x: hidden;
+}
+
+.app-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 40px;
+  min-height: 100vh;
+  gap: 20px;
+}
+
+/* Side Panels */
+.side-panel {
+  width: 18%;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(15px);
+  border-radius: 15px;
+  padding: 20px;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+}
+.side-panel h2 { font-family:'Orbitron'; color:#00f0ff; margin-bottom:15px; }
+.side-panel p, .side-panel ul, .side-panel li { font-size:0.9rem; color:#c0ffee; }
+.side-panel ul { padding-left:15px; }
+
+/* Center Card */
+.kyc-card {
+  flex: 1;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 40px 30px;
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  color: #fff;
+  text-align: center;
+  min-width: 300px;
+}
+
+/* Title */
+.title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.2rem;
+  color: #00f0ff;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff;
+}
+
+/* Wallet info */
+.wallet { margin-bottom: 25px; color: #c0ffee; font-weight: bold; }
+
+/* Form Section */
+.form-section { margin-bottom: 25px; text-align: left; }
+.form-section h2 { margin-bottom: 15px; color: #0ff; font-size: 1.1rem; font-family: 'Orbitron', sans-serif; }
+
+/* Floating input fields */
+.input-group { position: relative; margin-bottom: 20px; }
+.input-group input {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+.input-group input:focus {
+  background: rgba(255,255,255,0.2);
+  box-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff;
+}
+.input-group label {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: #b0f0ff;
+  pointer-events: none;
+  transition: 0.3s;
+}
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+  top: -10px;
+  font-size: 0.75rem;
+  color: #00f0ff;
+}
+
+/* Neon buttons */
+.glow-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  background: #00f0ff;
+  color: #000;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+.glow-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 15px #00f0ff, 0 0 30px #00f0ff;
+}
+.neon-purple { background: #d900ff; color:#fff; }
+.neon-purple:hover { box-shadow: 0 0 15px #d900ff, 0 0 30px #d900ff; }
+
+/* Status badges */
+.status-badge {
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: inline-block;
+  text-align: center;
+  min-width: 120px;
+}
+.status-badge.Pending { background: rgba(255,255,0,0.3); color:#f0f000; text-shadow:0 0 5px #f0f000; }
+.status-badge.Approved { background: rgba(0,255,0,0.3); color:#0fff00; text-shadow:0 0 5px #0fff00; }
+.status-badge.Rejected { background: rgba(255,0,0,0.3); color:#ff0f00; text-shadow:0 0 5px #ff0f00; }
+
+/* HR */
+hr { border-color: rgba(255,255,255,0.2); margin:25px 0; }
+
+/* Responsive */
+@media screen and (max-width: 1200px) {
+  .app-container { flex-direction: column; align-items: center; gap: 30px; }
+  .side-panel { width: 90%; }
+  .kyc-card { width: 90%; }
+}

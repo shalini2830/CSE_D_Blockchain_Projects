@@ -1,0 +1,4239 @@
+{
+  "contractName": "Customers",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "id_",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "email",
+          "type": "string"
+        }
+      ],
+      "name": "CustomerAdded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "id_",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "email",
+          "type": "string"
+        }
+      ],
+      "name": "CustomerDataUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "id_",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "customerName",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "dataHash",
+          "type": "string"
+        }
+      ],
+      "name": "DataHashUpdated",
+      "type": "event"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.12+commit.f00d7308\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"id_\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"email\",\"type\":\"string\"}],\"name\":\"CustomerAdded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"id_\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"email\",\"type\":\"string\"}],\"name\":\"CustomerDataUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"id_\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"customerName\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"dataHash\",\"type\":\"string\"}],\"name\":\"DataHashUpdated\",\"type\":\"event\"}],\"devdoc\":{\"author\":\"Suresh Konakanchi\",\"details\":\"Library for managing all customers, who are involved in the KYC process\",\"kind\":\"dev\",\"methods\":{},\"title\":\"Customers\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/Customers.sol\":\"Customers\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/Customers.sol\":{\"keccak256\":\"0x99443bc7c01715d8a2dbc403053776ec2fc3f84981d9a809e1a147063dccec6f\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://0033d680d4c2f2a0eff52eb726fd9751063f7bd9aa41dcbc40d29e74042e98f2\",\"dweb:/ipfs/QmTTuQyCTzp8E6FzbFk3iNdUmTobCCtrG9Hs5Q5CYfcCiS\"]},\"project:/contracts/Helpers.sol\":{\"keccak256\":\"0x2e1e714c855ea86e940eee15124367d5008bc4a7c5cb01f8064acfab8f29de2b\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://129806f4dd0ca330079ca646ad4fd90e7bc64f3ca43c2a5089ce3c3e8af8f87b\",\"dweb:/ipfs/QmfPgV3RGsKYTJgSvti6KVadWbDWzXW2EN1ccUfshJZ6Zy\"]},\"project:/contracts/Types.sol\":{\"keccak256\":\"0x5344ee24072b7fc8a068841310000ece1beca5f800c1e42349f9e5fcb179e636\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://5a55d40c56f908c7039658f8c3b7157aaccf16db233023f13dea69b6c682db9c\",\"dweb:/ipfs/QmVWG1EiAb1QWFGrgDuUiXqSLPG29dJRnTk2wMVp8G6bMX\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220c4d163c406ca1021cb27e3709e33f6eb1894274faba1d5fbcfe06eb523898f2864736f6c634300080c0033",
+  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220c4d163c406ca1021cb27e3709e33f6eb1894274faba1d5fbcfe06eb523898f2864736f6c634300080c0033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "288:4181:1:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "288:4181:1:-:0;;;;;",
+  "source": "// SPDX-License-Identifier: GPL-3.0\npragma experimental ABIEncoderV2;\npragma solidity >=0.4.25 <0.9.0;\n\nimport \"./Types.sol\";\nimport \"./Helpers.sol\";\n\n/**\n * @title Customers\n * @author Suresh Konakanchi\n * @dev Library for managing all customers, who are involved in the KYC process\n */\ncontract Customers {\n    address[] internal customerList;\n    mapping(address => Types.Customer) internal customers;\n\n    // Events\n\n    event CustomerAdded(address id_, string name, string email);\n    event CustomerDataUpdated(address id_, string name, string email);\n    event DataHashUpdated(address id_, string customerName, string dataHash);\n\n    // Modifiers\n\n    /**\n     * @notice Checks whether customer already exists\n     * @param id_ Metamask address of the customer\n     */\n    modifier isValidCustomer(address id_) {\n        require(id_ != address(0), \"Id is Empty\");\n        require(customers[id_].id_ != address(0), \"User Id Empty\");\n        require(\n            !Helpers.compareStrings(customers[id_].email, \"\"),\n            \"User Email Empty\"\n        );\n        _;\n    }\n\n    // Support Functions\n\n    /**\n     * @notice Checks whether customer already exists\n     * @param id_ Metamask address of the customer\n     * @return exists_ boolean value to say if customer exists or not\n     */\n    function customerExists(address id_) internal view returns (bool exists_) {\n        require(id_ != address(0), \"Id is empty\");\n        if (\n            customers[id_].id_ != address(0) &&\n            !Helpers.compareStrings(customers[id_].email, \"\")\n        ) {\n            exists_ = true;\n        }\n    }\n\n    // Contract Functions\n\n    /**\n     * @dev To get details of the customer\n     * @param id_ Customer's metamask address\n     * @return Customer object which will have complete details of the customer\n     */\n    function getcustomerdetails(address id_)\n        internal\n        view\n        returns (Types.Customer memory)\n    {\n        return customers[id_];\n    }\n\n    /**\n     * @dev Updates the user profile\n     * @param name_ Customer name\n     * @param email_ Email that need to be updated\n     * @param mobile_ Mobile number that need to be updated\n     */\n    function updateprofile(\n        string memory name_,\n        string memory email_,\n        uint256 mobile_\n    ) internal {\n        customers[msg.sender].name = name_;\n        customers[msg.sender].email = email_;\n        customers[msg.sender].mobileNumber = mobile_;\n        emit CustomerDataUpdated(msg.sender, name_, email_);\n    }\n\n    /**\n     * @dev Add new customer\n     * @param customer_ Customer object\n     */\n    function addcustomer(Types.Customer memory customer_) internal {\n        customers[customer_.id_] = customer_;\n        customerList.push(customer_.id_);\n        emit CustomerAdded(customer_.id_, customer_.name, customer_.email);\n    }\n\n    /**\n     * @dev To Update KYC verification bank\n     * @param id_ Customer's metamask ID\n     */\n    function updatekycdoneby(address id_) internal {\n        require(id_ != address(0), \"Customer Id Empty\");\n        customers[id_].kycVerifiedBy = msg.sender;\n    }\n\n    /**\n     * @dev Updates the Datahash of the documents\n     * @param hash_ Data hash value that need to be updated\n     * @param currentTime_ Current Date Time in unix epoch timestamp\n     */\n    function updatedatahash(string memory hash_, uint256 currentTime_)\n        internal\n    {\n        customers[msg.sender].dataHash = hash_;\n        customers[msg.sender].dataUpdatedOn = currentTime_;\n        emit DataHashUpdated(msg.sender, customers[msg.sender].name, hash_);\n    }\n\n    /**\n     * @dev Search for customer details in the list that the bank is directly linked to\n     * @param id_ Customer's metamask Id\n     * @param customers_ Customer metamask Id's\n     * @return boolean to say if customer exists or not\n     * @return Customer object to get the complete details of the customer\n     * Costly operation if we had more customers linked to this single bank\n     */\n    function searchcustomers(address id_, address[] memory customers_)\n        internal\n        view\n        returns (bool, Types.Customer memory)\n    {\n        bool found_;\n        Types.Customer memory customer_;\n\n        for (uint256 i = 0; i < customers_.length; i++) {\n            if (customers_[i] == id_) {\n                found_ = true;\n                customer_ = customers[id_];\n                break;\n            }\n        }\n        return (found_, customer_);\n    }\n}\n",
+  "sourcePath": "C:\\Users\\hats1\\Documents\\sample-decentralised-kyc-ethereum-main\\blockchain\\contracts\\Customers.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/Customers.sol",
+    "exportedSymbols": {
+      "Customers": [
+        727
+      ],
+      "Helpers": [
+        869
+      ],
+      "Types": [
+        1055
+      ]
+    },
+    "id": 728,
+    "license": "GPL-3.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 396,
+        "literals": [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "36:33:1"
+      },
+      {
+        "id": 397,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.4",
+          ".25",
+          "<",
+          "0.9",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "70:32:1"
+      },
+      {
+        "absolutePath": "project:/contracts/Types.sol",
+        "file": "./Types.sol",
+        "id": 398,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 728,
+        "sourceUnit": 1056,
+        "src": "104:21:1",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "project:/contracts/Helpers.sol",
+        "file": "./Helpers.sol",
+        "id": 399,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 728,
+        "sourceUnit": 870,
+        "src": "126:23:1",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "Customers",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 400,
+          "nodeType": "StructuredDocumentation",
+          "src": "151:136:1",
+          "text": " @title Customers\n @author Suresh Konakanchi\n @dev Library for managing all customers, who are involved in the KYC process"
+        },
+        "fullyImplemented": true,
+        "id": 727,
+        "linearizedBaseContracts": [
+          727
+        ],
+        "name": "Customers",
+        "nameLocation": "297:9:1",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 403,
+            "mutability": "mutable",
+            "name": "customerList",
+            "nameLocation": "332:12:1",
+            "nodeType": "VariableDeclaration",
+            "scope": 727,
+            "src": "313:31:1",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_array$_t_address_$dyn_storage",
+              "typeString": "address[]"
+            },
+            "typeName": {
+              "baseType": {
+                "id": 401,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "313:7:1",
+                "stateMutability": "nonpayable",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "id": 402,
+              "nodeType": "ArrayTypeName",
+              "src": "313:9:1",
+              "typeDescriptions": {
+                "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                "typeString": "address[]"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 408,
+            "mutability": "mutable",
+            "name": "customers",
+            "nameLocation": "394:9:1",
+            "nodeType": "VariableDeclaration",
+            "scope": 727,
+            "src": "350:53:1",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Customer_$1017_storage_$",
+              "typeString": "mapping(address => struct Types.Customer)"
+            },
+            "typeName": {
+              "id": 407,
+              "keyType": {
+                "id": 404,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "358:7:1",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "350:34:1",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Customer_$1017_storage_$",
+                "typeString": "mapping(address => struct Types.Customer)"
+              },
+              "valueType": {
+                "id": 406,
+                "nodeType": "UserDefinedTypeName",
+                "pathNode": {
+                  "id": 405,
+                  "name": "Types.Customer",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 1017,
+                  "src": "369:14:1"
+                },
+                "referencedDeclaration": 1017,
+                "src": "369:14:1",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Customer_$1017_storage_ptr",
+                  "typeString": "struct Types.Customer"
+                }
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "anonymous": false,
+            "id": 416,
+            "name": "CustomerAdded",
+            "nameLocation": "431:13:1",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 415,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 410,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "id_",
+                  "nameLocation": "453:3:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 416,
+                  "src": "445:11:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 409,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "445:7:1",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 412,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "name",
+                  "nameLocation": "465:4:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 416,
+                  "src": "458:11:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 411,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "458:6:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 414,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "email",
+                  "nameLocation": "478:5:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 416,
+                  "src": "471:12:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 413,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "471:6:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "444:40:1"
+            },
+            "src": "425:60:1"
+          },
+          {
+            "anonymous": false,
+            "id": 424,
+            "name": "CustomerDataUpdated",
+            "nameLocation": "496:19:1",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 423,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 418,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "id_",
+                  "nameLocation": "524:3:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 424,
+                  "src": "516:11:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 417,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "516:7:1",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 420,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "name",
+                  "nameLocation": "536:4:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 424,
+                  "src": "529:11:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 419,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "529:6:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 422,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "email",
+                  "nameLocation": "549:5:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 424,
+                  "src": "542:12:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 421,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "542:6:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "515:40:1"
+            },
+            "src": "490:66:1"
+          },
+          {
+            "anonymous": false,
+            "id": 432,
+            "name": "DataHashUpdated",
+            "nameLocation": "567:15:1",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 431,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 426,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "id_",
+                  "nameLocation": "591:3:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 432,
+                  "src": "583:11:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 425,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "583:7:1",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 428,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "customerName",
+                  "nameLocation": "603:12:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 432,
+                  "src": "596:19:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 427,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "596:6:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 430,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "dataHash",
+                  "nameLocation": "624:8:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 432,
+                  "src": "617:15:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 429,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "617:6:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "582:51:1"
+            },
+            "src": "561:73:1"
+          },
+          {
+            "body": {
+              "id": 474,
+              "nodeType": "Block",
+              "src": "817:259:1",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 443,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "id": 438,
+                          "name": "id_",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 435,
+                          "src": "835:3:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "arguments": [
+                            {
+                              "hexValue": "30",
+                              "id": 441,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "850:1:1",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 440,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "842:7:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": {
+                              "id": 439,
+                              "name": "address",
+                              "nodeType": "ElementaryTypeName",
+                              "src": "842:7:1",
+                              "typeDescriptions": {}
+                            }
+                          },
+                          "id": 442,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "842:10:1",
+                          "tryCall": false,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "835:17:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "hexValue": "496420697320456d707479",
+                        "id": 444,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "854:13:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_43a29fb45554855e0ce27a3d67a3fee7c9819646bff244e8bc147ecf5c43342e",
+                          "typeString": "literal_string \"Id is Empty\""
+                        },
+                        "value": "Id is Empty"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_43a29fb45554855e0ce27a3d67a3fee7c9819646bff244e8bc147ecf5c43342e",
+                          "typeString": "literal_string \"Id is Empty\""
+                        }
+                      ],
+                      "id": 437,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        4294967278,
+                        4294967278
+                      ],
+                      "referencedDeclaration": 4294967278,
+                      "src": "827:7:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 445,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "827:41:1",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 446,
+                  "nodeType": "ExpressionStatement",
+                  "src": "827:41:1"
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 456,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "expression": {
+                            "baseExpression": {
+                              "id": 448,
+                              "name": "customers",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 408,
+                              "src": "886:9:1",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Customer_$1017_storage_$",
+                                "typeString": "mapping(address => struct Types.Customer storage ref)"
+                              }
+                            },
+                            "id": 450,
+                            "indexExpression": {
+                              "id": 449,
+                              "name": "id_",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 435,
+                              "src": "896:3:1",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            },
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "nodeType": "IndexAccess",
+                            "src": "886:14:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Customer_$1017_storage",
+                              "typeString": "struct Types.Customer storage ref"
+                            }
+                          },
+                          "id": 451,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "id_",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 1010,
+                          "src": "886:18:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "arguments": [
+                            {
+                              "hexValue": "30",
+                              "id": 454,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "916:1:1",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 453,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "908:7:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": {
+                              "id": 452,
+                              "name": "address",
+                              "nodeType": "ElementaryTypeName",
+                              "src": "908:7:1",
+                              "typeDescriptions": {}
+                            }
+                          },
+                          "id": 455,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "908:10:1",
+                          "tryCall": false,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "886:32:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "hexValue": "5573657220496420456d707479",
+                        "id": 457,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "920:15:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_a658b06f9c71c8a61b697f8815e9b269e34394606bd3e585d69acf194a33a5af",
+                          "typeString": "literal_string \"User Id Empty\""
+                        },
+                        "value": "User Id Empty"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_a658b06f9c71c8a61b697f8815e9b269e34394606bd3e585d69acf194a33a5af",
+                          "typeString": "literal_string \"User Id Empty\""
+                        }
+                      ],
+                      "id": 447,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        4294967278,
+                        4294967278
+                      ],
+                      "referencedDeclaration": 4294967278,
+                      "src": "878:7:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 458,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "878:58:1",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 459,
+                  "nodeType": "ExpressionStatement",
+                  "src": "878:58:1"
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 469,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "UnaryOperation",
+                        "operator": "!",
+                        "prefix": true,
+                        "src": "967:49:1",
+                        "subExpression": {
+                          "arguments": [
+                            {
+                              "expression": {
+                                "baseExpression": {
+                                  "id": 463,
+                                  "name": "customers",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 408,
+                                  "src": "991:9:1",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Customer_$1017_storage_$",
+                                    "typeString": "mapping(address => struct Types.Customer storage ref)"
+                                  }
+                                },
+                                "id": 465,
+                                "indexExpression": {
+                                  "id": 464,
+                                  "name": "id_",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 435,
+                                  "src": "1001:3:1",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_address",
+                                    "typeString": "address"
+                                  }
+                                },
+                                "isConstant": false,
+                                "isLValue": true,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "nodeType": "IndexAccess",
+                                "src": "991:14:1",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_struct$_Customer_$1017_storage",
+                                  "typeString": "struct Types.Customer storage ref"
+                                }
+                              },
+                              "id": 466,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "memberName": "email",
+                              "nodeType": "MemberAccess",
+                              "referencedDeclaration": 1006,
+                              "src": "991:20:1",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_string_storage",
+                                "typeString": "string storage ref"
+                              }
+                            },
+                            {
+                              "hexValue": "",
+                              "id": 467,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "string",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "1013:2:1",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_stringliteral_c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+                                "typeString": "literal_string \"\""
+                              },
+                              "value": ""
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_string_storage",
+                                "typeString": "string storage ref"
+                              },
+                              {
+                                "typeIdentifier": "t_stringliteral_c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+                                "typeString": "literal_string \"\""
+                              }
+                            ],
+                            "expression": {
+                              "id": 461,
+                              "name": "Helpers",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 869,
+                              "src": "968:7:1",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_type$_t_contract$_Helpers_$869_$",
+                                "typeString": "type(library Helpers)"
+                              }
+                            },
+                            "id": 462,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "compareStrings",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 848,
+                            "src": "968:22:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_internal_pure$_t_string_memory_ptr_$_t_string_memory_ptr_$returns$_t_bool_$",
+                              "typeString": "function (string memory,string memory) pure returns (bool)"
+                            }
+                          },
+                          "id": 468,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "968:48:1",
+                          "tryCall": false,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "hexValue": "5573657220456d61696c20456d707479",
+                        "id": 470,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "1030:18:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_918075f5aae7619c2a48d32d5300916ecacf934844298e67abeb0535626a9a40",
+                          "typeString": "literal_string \"User Email Empty\""
+                        },
+                        "value": "User Email Empty"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_918075f5aae7619c2a48d32d5300916ecacf934844298e67abeb0535626a9a40",
+                          "typeString": "literal_string \"User Email Empty\""
+                        }
+                      ],
+                      "id": 460,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        4294967278,
+                        4294967278
+                      ],
+                      "referencedDeclaration": 4294967278,
+                      "src": "946:7:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 471,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "946:112:1",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 472,
+                  "nodeType": "ExpressionStatement",
+                  "src": "946:112:1"
+                },
+                {
+                  "id": 473,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1068:1:1"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 433,
+              "nodeType": "StructuredDocumentation",
+              "src": "658:116:1",
+              "text": " @notice Checks whether customer already exists\n @param id_ Metamask address of the customer"
+            },
+            "id": 475,
+            "name": "isValidCustomer",
+            "nameLocation": "788:15:1",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 436,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 435,
+                  "mutability": "mutable",
+                  "name": "id_",
+                  "nameLocation": "812:3:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 475,
+                  "src": "804:11:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 434,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "804:7:1",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "803:13:1"
+            },
+            "src": "779:297:1",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 518,
+              "nodeType": "Block",
+              "src": "1373:231:1",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 489,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "id": 484,
+                          "name": "id_",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 478,
+                          "src": "1391:3:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "arguments": [
+                            {
+                              "hexValue": "30",
+                              "id": 487,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "1406:1:1",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 486,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "1398:7:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": {
+                              "id": 485,
+                              "name": "address",
+                              "nodeType": "ElementaryTypeName",
+                              "src": "1398:7:1",
+                              "typeDescriptions": {}
+                            }
+                          },
+                          "id": 488,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1398:10:1",
+                          "tryCall": false,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1391:17:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "hexValue": "496420697320656d707479",
+                        "id": 490,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "1410:13:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_35df28ade811c7168471a4c45f8b8f323c900065c9be692a27d9641a9e96551c",
+                          "typeString": "literal_string \"Id is empty\""
+                        },
+                        "value": "Id is empty"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_35df28ade811c7168471a4c45f8b8f323c900065c9be692a27d9641a9e96551c",
+                          "typeString": "literal_string \"Id is empty\""
+                        }
+                      ],
+                      "id": 483,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        4294967278,
+                        4294967278
+                      ],
+                      "referencedDeclaration": 4294967278,
+                      "src": "1383:7:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 491,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1383:41:1",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 492,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1383:41:1"
+                },
+                {
+                  "condition": {
+                    "commonType": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    },
+                    "id": 511,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "commonType": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      },
+                      "id": 501,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "leftExpression": {
+                        "expression": {
+                          "baseExpression": {
+                            "id": 493,
+                            "name": "customers",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 408,
+                            "src": "1451:9:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Customer_$1017_storage_$",
+                              "typeString": "mapping(address => struct Types.Customer storage ref)"
+                            }
+                          },
+                          "id": 495,
+                          "indexExpression": {
+                            "id": 494,
+                            "name": "id_",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 478,
+                            "src": "1461:3:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          },
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "IndexAccess",
+                          "src": "1451:14:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Customer_$1017_storage",
+                            "typeString": "struct Types.Customer storage ref"
+                          }
+                        },
+                        "id": 496,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "id_",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 1010,
+                        "src": "1451:18:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      "nodeType": "BinaryOperation",
+                      "operator": "!=",
+                      "rightExpression": {
+                        "arguments": [
+                          {
+                            "hexValue": "30",
+                            "id": 499,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "kind": "number",
+                            "lValueRequested": false,
+                            "nodeType": "Literal",
+                            "src": "1481:1:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_rational_0_by_1",
+                              "typeString": "int_const 0"
+                            },
+                            "value": "0"
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_rational_0_by_1",
+                              "typeString": "int_const 0"
+                            }
+                          ],
+                          "id": 498,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "lValueRequested": false,
+                          "nodeType": "ElementaryTypeNameExpression",
+                          "src": "1473:7:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_type$_t_address_$",
+                            "typeString": "type(address)"
+                          },
+                          "typeName": {
+                            "id": 497,
+                            "name": "address",
+                            "nodeType": "ElementaryTypeName",
+                            "src": "1473:7:1",
+                            "typeDescriptions": {}
+                          }
+                        },
+                        "id": 500,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "typeConversion",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "1473:10:1",
+                        "tryCall": false,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      "src": "1451:32:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "&&",
+                    "rightExpression": {
+                      "id": 510,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "UnaryOperation",
+                      "operator": "!",
+                      "prefix": true,
+                      "src": "1499:49:1",
+                      "subExpression": {
+                        "arguments": [
+                          {
+                            "expression": {
+                              "baseExpression": {
+                                "id": 504,
+                                "name": "customers",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 408,
+                                "src": "1523:9:1",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Customer_$1017_storage_$",
+                                  "typeString": "mapping(address => struct Types.Customer storage ref)"
+                                }
+                              },
+                              "id": 506,
+                              "indexExpression": {
+                                "id": 505,
+                                "name": "id_",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 478,
+                                "src": "1533:3:1",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                }
+                              },
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "nodeType": "IndexAccess",
+                              "src": "1523:14:1",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_struct$_Customer_$1017_storage",
+                                "typeString": "struct Types.Customer storage ref"
+                              }
+                            },
+                            "id": 507,
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "email",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 1006,
+                            "src": "1523:20:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_string_storage",
+                              "typeString": "string storage ref"
+                            }
+                          },
+                          {
+                            "hexValue": "",
+                            "id": 508,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "kind": "string",
+                            "lValueRequested": false,
+                            "nodeType": "Literal",
+                            "src": "1545:2:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_stringliteral_c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+                              "typeString": "literal_string \"\""
+                            },
+                            "value": ""
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_string_storage",
+                              "typeString": "string storage ref"
+                            },
+                            {
+                              "typeIdentifier": "t_stringliteral_c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+                              "typeString": "literal_string \"\""
+                            }
+                          ],
+                          "expression": {
+                            "id": 502,
+                            "name": "Helpers",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 869,
+                            "src": "1500:7:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_contract$_Helpers_$869_$",
+                              "typeString": "type(library Helpers)"
+                            }
+                          },
+                          "id": 503,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "compareStrings",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 848,
+                          "src": "1500:22:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_internal_pure$_t_string_memory_ptr_$_t_string_memory_ptr_$returns$_t_bool_$",
+                            "typeString": "function (string memory,string memory) pure returns (bool)"
+                          }
+                        },
+                        "id": 509,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "1500:48:1",
+                        "tryCall": false,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "src": "1451:97:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 517,
+                  "nodeType": "IfStatement",
+                  "src": "1434:164:1",
+                  "trueBody": {
+                    "id": 516,
+                    "nodeType": "Block",
+                    "src": "1559:39:1",
+                    "statements": [
+                      {
+                        "expression": {
+                          "id": 514,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftHandSide": {
+                            "id": 512,
+                            "name": "exists_",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 481,
+                            "src": "1573:7:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_bool",
+                              "typeString": "bool"
+                            }
+                          },
+                          "nodeType": "Assignment",
+                          "operator": "=",
+                          "rightHandSide": {
+                            "hexValue": "74727565",
+                            "id": 513,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "kind": "bool",
+                            "lValueRequested": false,
+                            "nodeType": "Literal",
+                            "src": "1583:4:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_bool",
+                              "typeString": "bool"
+                            },
+                            "value": "true"
+                          },
+                          "src": "1573:14:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "id": 515,
+                        "nodeType": "ExpressionStatement",
+                        "src": "1573:14:1"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "documentation": {
+              "id": 476,
+              "nodeType": "StructuredDocumentation",
+              "src": "1108:186:1",
+              "text": " @notice Checks whether customer already exists\n @param id_ Metamask address of the customer\n @return exists_ boolean value to say if customer exists or not"
+            },
+            "id": 519,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "customerExists",
+            "nameLocation": "1308:14:1",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 479,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 478,
+                  "mutability": "mutable",
+                  "name": "id_",
+                  "nameLocation": "1331:3:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 519,
+                  "src": "1323:11:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 477,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1323:7:1",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1322:13:1"
+            },
+            "returnParameters": {
+              "id": 482,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 481,
+                  "mutability": "mutable",
+                  "name": "exists_",
+                  "nameLocation": "1364:7:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 519,
+                  "src": "1359:12:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 480,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1359:4:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1358:14:1"
+            },
+            "scope": 727,
+            "src": "1299:305:1",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 532,
+              "nodeType": "Block",
+              "src": "1937:38:1",
+              "statements": [
+                {
+                  "expression": {
+                    "baseExpression": {
+                      "id": 528,
+                      "name": "customers",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 408,
+                      "src": "1954:9:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Customer_$1017_storage_$",
+                        "typeString": "mapping(address => struct Types.Customer storage ref)"
+                      }
+                    },
+                    "id": 530,
+                    "indexExpression": {
+                      "id": 529,
+                      "name": "id_",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 522,
+                      "src": "1964:3:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "IndexAccess",
+                    "src": "1954:14:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Customer_$1017_storage",
+                      "typeString": "struct Types.Customer storage ref"
+                    }
+                  },
+                  "functionReturnParameters": 527,
+                  "id": 531,
+                  "nodeType": "Return",
+                  "src": "1947:21:1"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 520,
+              "nodeType": "StructuredDocumentation",
+              "src": "1637:180:1",
+              "text": " @dev To get details of the customer\n @param id_ Customer's metamask address\n @return Customer object which will have complete details of the customer"
+            },
+            "id": 533,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getcustomerdetails",
+            "nameLocation": "1831:18:1",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 523,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 522,
+                  "mutability": "mutable",
+                  "name": "id_",
+                  "nameLocation": "1858:3:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 533,
+                  "src": "1850:11:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 521,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1850:7:1",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1849:13:1"
+            },
+            "returnParameters": {
+              "id": 527,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 526,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 533,
+                  "src": "1910:21:1",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Customer_$1017_memory_ptr",
+                    "typeString": "struct Types.Customer"
+                  },
+                  "typeName": {
+                    "id": 525,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 524,
+                      "name": "Types.Customer",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 1017,
+                      "src": "1910:14:1"
+                    },
+                    "referencedDeclaration": 1017,
+                    "src": "1910:14:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Customer_$1017_storage_ptr",
+                      "typeString": "struct Types.Customer"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1909:23:1"
+            },
+            "scope": 727,
+            "src": "1822:153:1",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 574,
+              "nodeType": "Block",
+              "src": "2301:212:1",
+              "statements": [
+                {
+                  "expression": {
+                    "id": 549,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "expression": {
+                        "baseExpression": {
+                          "id": 543,
+                          "name": "customers",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 408,
+                          "src": "2311:9:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Customer_$1017_storage_$",
+                            "typeString": "mapping(address => struct Types.Customer storage ref)"
+                          }
+                        },
+                        "id": 546,
+                        "indexExpression": {
+                          "expression": {
+                            "id": 544,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 4294967281,
+                            "src": "2321:3:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 545,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "src": "2321:10:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "2311:21:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Customer_$1017_storage",
+                          "typeString": "struct Types.Customer storage ref"
+                        }
+                      },
+                      "id": 547,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "name",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 1004,
+                      "src": "2311:26:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_storage",
+                        "typeString": "string storage ref"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 548,
+                      "name": "name_",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 536,
+                      "src": "2340:5:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_memory_ptr",
+                        "typeString": "string memory"
+                      }
+                    },
+                    "src": "2311:34:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage",
+                      "typeString": "string storage ref"
+                    }
+                  },
+                  "id": 550,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2311:34:1"
+                },
+                {
+                  "expression": {
+                    "id": 557,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "expression": {
+                        "baseExpression": {
+                          "id": 551,
+                          "name": "customers",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 408,
+                          "src": "2355:9:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Customer_$1017_storage_$",
+                            "typeString": "mapping(address => struct Types.Customer storage ref)"
+                          }
+                        },
+                        "id": 554,
+                        "indexExpression": {
+                          "expression": {
+                            "id": 552,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 4294967281,
+                            "src": "2365:3:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 553,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "src": "2365:10:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "2355:21:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Customer_$1017_storage",
+                          "typeString": "struct Types.Customer storage ref"
+                        }
+                      },
+                      "id": 555,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "email",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 1006,
+                      "src": "2355:27:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_storage",
+                        "typeString": "string storage ref"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 556,
+                      "name": "email_",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 538,
+                      "src": "2385:6:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_memory_ptr",
+                        "typeString": "string memory"
+                      }
+                    },
+                    "src": "2355:36:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage",
+                      "typeString": "string storage ref"
+                    }
+                  },
+                  "id": 558,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2355:36:1"
+                },
+                {
+                  "expression": {
+                    "id": 565,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "expression": {
+                        "baseExpression": {
+                          "id": 559,
+                          "name": "customers",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 408,
+                          "src": "2401:9:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Customer_$1017_storage_$",
+                            "typeString": "mapping(address => struct Types.Customer storage ref)"
+                          }
+                        },
+                        "id": 562,
+                        "indexExpression": {
+                          "expression": {
+                            "id": 560,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 4294967281,
+                            "src": "2411:3:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 561,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "src": "2411:10:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "2401:21:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Customer_$1017_storage",
+                          "typeString": "struct Types.Customer storage ref"
+                        }
+                      },
+                      "id": 563,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "mobileNumber",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 1008,
+                      "src": "2401:34:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 564,
+                      "name": "mobile_",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 540,
+                      "src": "2438:7:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "2401:44:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 566,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2401:44:1"
+                },
+                {
+                  "eventCall": {
+                    "arguments": [
+                      {
+                        "expression": {
+                          "id": 568,
+                          "name": "msg",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 4294967281,
+                          "src": "2480:3:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_magic_message",
+                            "typeString": "msg"
+                          }
+                        },
+                        "id": 569,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "sender",
+                        "nodeType": "MemberAccess",
+                        "src": "2480:10:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      {
+                        "id": 570,
+                        "name": "name_",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 536,
+                        "src": "2492:5:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      },
+                      {
+                        "id": 571,
+                        "name": "email_",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 538,
+                        "src": "2499:6:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        },
+                        {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      ],
+                      "id": 567,
+                      "name": "CustomerDataUpdated",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 424,
+                      "src": "2460:19:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_string_memory_ptr_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (address,string memory,string memory)"
+                      }
+                    },
+                    "id": 572,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2460:46:1",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 573,
+                  "nodeType": "EmitStatement",
+                  "src": "2455:51:1"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 534,
+              "nodeType": "StructuredDocumentation",
+              "src": "1981:193:1",
+              "text": " @dev Updates the user profile\n @param name_ Customer name\n @param email_ Email that need to be updated\n @param mobile_ Mobile number that need to be updated"
+            },
+            "id": 575,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "updateprofile",
+            "nameLocation": "2188:13:1",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 541,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 536,
+                  "mutability": "mutable",
+                  "name": "name_",
+                  "nameLocation": "2225:5:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 575,
+                  "src": "2211:19:1",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 535,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2211:6:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 538,
+                  "mutability": "mutable",
+                  "name": "email_",
+                  "nameLocation": "2254:6:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 575,
+                  "src": "2240:20:1",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 537,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2240:6:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 540,
+                  "mutability": "mutable",
+                  "name": "mobile_",
+                  "nameLocation": "2278:7:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 575,
+                  "src": "2270:15:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 539,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2270:7:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2201:90:1"
+            },
+            "returnParameters": {
+              "id": 542,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2301:0:1"
+            },
+            "scope": 727,
+            "src": "2179:334:1",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 605,
+              "nodeType": "Block",
+              "src": "2667:171:1",
+              "statements": [
+                {
+                  "expression": {
+                    "id": 587,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "baseExpression": {
+                        "id": 582,
+                        "name": "customers",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 408,
+                        "src": "2677:9:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Customer_$1017_storage_$",
+                          "typeString": "mapping(address => struct Types.Customer storage ref)"
+                        }
+                      },
+                      "id": 585,
+                      "indexExpression": {
+                        "expression": {
+                          "id": 583,
+                          "name": "customer_",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 579,
+                          "src": "2687:9:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Customer_$1017_memory_ptr",
+                            "typeString": "struct Types.Customer memory"
+                          }
+                        },
+                        "id": 584,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "id_",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 1010,
+                        "src": "2687:13:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "2677:24:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Customer_$1017_storage",
+                        "typeString": "struct Types.Customer storage ref"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 586,
+                      "name": "customer_",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 579,
+                      "src": "2704:9:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Customer_$1017_memory_ptr",
+                        "typeString": "struct Types.Customer memory"
+                      }
+                    },
+                    "src": "2677:36:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Customer_$1017_storage",
+                      "typeString": "struct Types.Customer storage ref"
+                    }
+                  },
+                  "id": 588,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2677:36:1"
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "expression": {
+                          "id": 592,
+                          "name": "customer_",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 579,
+                          "src": "2741:9:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Customer_$1017_memory_ptr",
+                            "typeString": "struct Types.Customer memory"
+                          }
+                        },
+                        "id": 593,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "id_",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 1010,
+                        "src": "2741:13:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "expression": {
+                        "id": 589,
+                        "name": "customerList",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 403,
+                        "src": "2723:12:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_array$_t_address_$dyn_storage",
+                          "typeString": "address[] storage ref"
+                        }
+                      },
+                      "id": 591,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "push",
+                      "nodeType": "MemberAccess",
+                      "src": "2723:17:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_arraypush_nonpayable$_t_array$_t_address_$dyn_storage_ptr_$_t_address_$returns$__$bound_to$_t_array$_t_address_$dyn_storage_ptr_$",
+                        "typeString": "function (address[] storage pointer,address)"
+                      }
+                    },
+                    "id": 594,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2723:32:1",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 595,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2723:32:1"
+                },
+                {
+                  "eventCall": {
+                    "arguments": [
+                      {
+                        "expression": {
+                          "id": 597,
+                          "name": "customer_",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 579,
+                          "src": "2784:9:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Customer_$1017_memory_ptr",
+                            "typeString": "struct Types.Customer memory"
+                          }
+                        },
+                        "id": 598,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "id_",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 1010,
+                        "src": "2784:13:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      {
+                        "expression": {
+                          "id": 599,
+                          "name": "customer_",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 579,
+                          "src": "2799:9:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Customer_$1017_memory_ptr",
+                            "typeString": "struct Types.Customer memory"
+                          }
+                        },
+                        "id": 600,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "name",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 1004,
+                        "src": "2799:14:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      },
+                      {
+                        "expression": {
+                          "id": 601,
+                          "name": "customer_",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 579,
+                          "src": "2815:9:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Customer_$1017_memory_ptr",
+                            "typeString": "struct Types.Customer memory"
+                          }
+                        },
+                        "id": 602,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "email",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 1006,
+                        "src": "2815:15:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        },
+                        {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      ],
+                      "id": 596,
+                      "name": "CustomerAdded",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 416,
+                      "src": "2770:13:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_string_memory_ptr_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (address,string memory,string memory)"
+                      }
+                    },
+                    "id": 603,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2770:61:1",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 604,
+                  "nodeType": "EmitStatement",
+                  "src": "2765:66:1"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 576,
+              "nodeType": "StructuredDocumentation",
+              "src": "2519:80:1",
+              "text": " @dev Add new customer\n @param customer_ Customer object"
+            },
+            "id": 606,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "addcustomer",
+            "nameLocation": "2613:11:1",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 580,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 579,
+                  "mutability": "mutable",
+                  "name": "customer_",
+                  "nameLocation": "2647:9:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 606,
+                  "src": "2625:31:1",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Customer_$1017_memory_ptr",
+                    "typeString": "struct Types.Customer"
+                  },
+                  "typeName": {
+                    "id": 578,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 577,
+                      "name": "Types.Customer",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 1017,
+                      "src": "2625:14:1"
+                    },
+                    "referencedDeclaration": 1017,
+                    "src": "2625:14:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Customer_$1017_storage_ptr",
+                      "typeString": "struct Types.Customer"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2624:33:1"
+            },
+            "returnParameters": {
+              "id": 581,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2667:0:1"
+            },
+            "scope": 727,
+            "src": "2604:234:1",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 630,
+              "nodeType": "Block",
+              "src": "2992:115:1",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 618,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "id": 613,
+                          "name": "id_",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 609,
+                          "src": "3010:3:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "arguments": [
+                            {
+                              "hexValue": "30",
+                              "id": 616,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "3025:1:1",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 615,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "3017:7:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": {
+                              "id": 614,
+                              "name": "address",
+                              "nodeType": "ElementaryTypeName",
+                              "src": "3017:7:1",
+                              "typeDescriptions": {}
+                            }
+                          },
+                          "id": 617,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "3017:10:1",
+                          "tryCall": false,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "3010:17:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "hexValue": "437573746f6d657220496420456d707479",
+                        "id": 619,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "3029:19:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_4a326b6c07e9e27f685fbf087b37bf852a3585bc7ae56cae309f620c66cdebf0",
+                          "typeString": "literal_string \"Customer Id Empty\""
+                        },
+                        "value": "Customer Id Empty"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_4a326b6c07e9e27f685fbf087b37bf852a3585bc7ae56cae309f620c66cdebf0",
+                          "typeString": "literal_string \"Customer Id Empty\""
+                        }
+                      ],
+                      "id": 612,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        4294967278,
+                        4294967278
+                      ],
+                      "referencedDeclaration": 4294967278,
+                      "src": "3002:7:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 620,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "3002:47:1",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 621,
+                  "nodeType": "ExpressionStatement",
+                  "src": "3002:47:1"
+                },
+                {
+                  "expression": {
+                    "id": 628,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "expression": {
+                        "baseExpression": {
+                          "id": 622,
+                          "name": "customers",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 408,
+                          "src": "3059:9:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Customer_$1017_storage_$",
+                            "typeString": "mapping(address => struct Types.Customer storage ref)"
+                          }
+                        },
+                        "id": 624,
+                        "indexExpression": {
+                          "id": 623,
+                          "name": "id_",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 609,
+                          "src": "3069:3:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "3059:14:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Customer_$1017_storage",
+                          "typeString": "struct Types.Customer storage ref"
+                        }
+                      },
+                      "id": 625,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "kycVerifiedBy",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 1012,
+                      "src": "3059:28:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "expression": {
+                        "id": 626,
+                        "name": "msg",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 4294967281,
+                        "src": "3090:3:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_magic_message",
+                          "typeString": "msg"
+                        }
+                      },
+                      "id": 627,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "sender",
+                      "nodeType": "MemberAccess",
+                      "src": "3090:10:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "src": "3059:41:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "id": 629,
+                  "nodeType": "ExpressionStatement",
+                  "src": "3059:41:1"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 607,
+              "nodeType": "StructuredDocumentation",
+              "src": "2844:96:1",
+              "text": " @dev To Update KYC verification bank\n @param id_ Customer's metamask ID"
+            },
+            "id": 631,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "updatekycdoneby",
+            "nameLocation": "2954:15:1",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 610,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 609,
+                  "mutability": "mutable",
+                  "name": "id_",
+                  "nameLocation": "2978:3:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 631,
+                  "src": "2970:11:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 608,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2970:7:1",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2969:13:1"
+            },
+            "returnParameters": {
+              "id": 611,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2992:0:1"
+            },
+            "scope": 727,
+            "src": "2945:162:1",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 666,
+              "nodeType": "Block",
+              "src": "3396:192:1",
+              "statements": [
+                {
+                  "expression": {
+                    "id": 645,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "expression": {
+                        "baseExpression": {
+                          "id": 639,
+                          "name": "customers",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 408,
+                          "src": "3406:9:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Customer_$1017_storage_$",
+                            "typeString": "mapping(address => struct Types.Customer storage ref)"
+                          }
+                        },
+                        "id": 642,
+                        "indexExpression": {
+                          "expression": {
+                            "id": 640,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 4294967281,
+                            "src": "3416:3:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 641,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "src": "3416:10:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "3406:21:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Customer_$1017_storage",
+                          "typeString": "struct Types.Customer storage ref"
+                        }
+                      },
+                      "id": 643,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "dataHash",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 1014,
+                      "src": "3406:30:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_storage",
+                        "typeString": "string storage ref"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 644,
+                      "name": "hash_",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 634,
+                      "src": "3439:5:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_memory_ptr",
+                        "typeString": "string memory"
+                      }
+                    },
+                    "src": "3406:38:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage",
+                      "typeString": "string storage ref"
+                    }
+                  },
+                  "id": 646,
+                  "nodeType": "ExpressionStatement",
+                  "src": "3406:38:1"
+                },
+                {
+                  "expression": {
+                    "id": 653,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "expression": {
+                        "baseExpression": {
+                          "id": 647,
+                          "name": "customers",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 408,
+                          "src": "3454:9:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Customer_$1017_storage_$",
+                            "typeString": "mapping(address => struct Types.Customer storage ref)"
+                          }
+                        },
+                        "id": 650,
+                        "indexExpression": {
+                          "expression": {
+                            "id": 648,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 4294967281,
+                            "src": "3464:3:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 649,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "src": "3464:10:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "3454:21:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Customer_$1017_storage",
+                          "typeString": "struct Types.Customer storage ref"
+                        }
+                      },
+                      "id": 651,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "dataUpdatedOn",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 1016,
+                      "src": "3454:35:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 652,
+                      "name": "currentTime_",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 636,
+                      "src": "3492:12:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "3454:50:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 654,
+                  "nodeType": "ExpressionStatement",
+                  "src": "3454:50:1"
+                },
+                {
+                  "eventCall": {
+                    "arguments": [
+                      {
+                        "expression": {
+                          "id": 656,
+                          "name": "msg",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 4294967281,
+                          "src": "3535:3:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_magic_message",
+                            "typeString": "msg"
+                          }
+                        },
+                        "id": 657,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "sender",
+                        "nodeType": "MemberAccess",
+                        "src": "3535:10:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      {
+                        "expression": {
+                          "baseExpression": {
+                            "id": 658,
+                            "name": "customers",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 408,
+                            "src": "3547:9:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Customer_$1017_storage_$",
+                              "typeString": "mapping(address => struct Types.Customer storage ref)"
+                            }
+                          },
+                          "id": 661,
+                          "indexExpression": {
+                            "expression": {
+                              "id": 659,
+                              "name": "msg",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 4294967281,
+                              "src": "3557:3:1",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_magic_message",
+                                "typeString": "msg"
+                              }
+                            },
+                            "id": 660,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "sender",
+                            "nodeType": "MemberAccess",
+                            "src": "3557:10:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          },
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "IndexAccess",
+                          "src": "3547:21:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Customer_$1017_storage",
+                            "typeString": "struct Types.Customer storage ref"
+                          }
+                        },
+                        "id": 662,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "name",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 1004,
+                        "src": "3547:26:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_storage",
+                          "typeString": "string storage ref"
+                        }
+                      },
+                      {
+                        "id": 663,
+                        "name": "hash_",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 634,
+                        "src": "3575:5:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        {
+                          "typeIdentifier": "t_string_storage",
+                          "typeString": "string storage ref"
+                        },
+                        {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      ],
+                      "id": 655,
+                      "name": "DataHashUpdated",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 432,
+                      "src": "3519:15:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_string_memory_ptr_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (address,string memory,string memory)"
+                      }
+                    },
+                    "id": 664,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "3519:62:1",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 665,
+                  "nodeType": "EmitStatement",
+                  "src": "3514:67:1"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 632,
+              "nodeType": "StructuredDocumentation",
+              "src": "3113:190:1",
+              "text": " @dev Updates the Datahash of the documents\n @param hash_ Data hash value that need to be updated\n @param currentTime_ Current Date Time in unix epoch timestamp"
+            },
+            "id": 667,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "updatedatahash",
+            "nameLocation": "3317:14:1",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 637,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 634,
+                  "mutability": "mutable",
+                  "name": "hash_",
+                  "nameLocation": "3346:5:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 667,
+                  "src": "3332:19:1",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 633,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3332:6:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 636,
+                  "mutability": "mutable",
+                  "name": "currentTime_",
+                  "nameLocation": "3361:12:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 667,
+                  "src": "3353:20:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 635,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3353:7:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3331:43:1"
+            },
+            "returnParameters": {
+              "id": 638,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3396:0:1"
+            },
+            "scope": 727,
+            "src": "3308:280:1",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 725,
+              "nodeType": "Block",
+              "src": "4141:326:1",
+              "statements": [
+                {
+                  "assignments": [
+                    682
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 682,
+                      "mutability": "mutable",
+                      "name": "found_",
+                      "nameLocation": "4156:6:1",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 725,
+                      "src": "4151:11:1",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "typeName": {
+                        "id": 681,
+                        "name": "bool",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "4151:4:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 683,
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "4151:11:1"
+                },
+                {
+                  "assignments": [
+                    688
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 688,
+                      "mutability": "mutable",
+                      "name": "customer_",
+                      "nameLocation": "4194:9:1",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 725,
+                      "src": "4172:31:1",
+                      "stateVariable": false,
+                      "storageLocation": "memory",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Customer_$1017_memory_ptr",
+                        "typeString": "struct Types.Customer"
+                      },
+                      "typeName": {
+                        "id": 687,
+                        "nodeType": "UserDefinedTypeName",
+                        "pathNode": {
+                          "id": 686,
+                          "name": "Types.Customer",
+                          "nodeType": "IdentifierPath",
+                          "referencedDeclaration": 1017,
+                          "src": "4172:14:1"
+                        },
+                        "referencedDeclaration": 1017,
+                        "src": "4172:14:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Customer_$1017_storage_ptr",
+                          "typeString": "struct Types.Customer"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 689,
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "4172:31:1"
+                },
+                {
+                  "body": {
+                    "id": 719,
+                    "nodeType": "Block",
+                    "src": "4262:163:1",
+                    "statements": [
+                      {
+                        "condition": {
+                          "commonType": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          },
+                          "id": 705,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftExpression": {
+                            "baseExpression": {
+                              "id": 701,
+                              "name": "customers_",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 673,
+                              "src": "4280:10:1",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
+                                "typeString": "address[] memory"
+                              }
+                            },
+                            "id": 703,
+                            "indexExpression": {
+                              "id": 702,
+                              "name": "i",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 691,
+                              "src": "4291:1:1",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            },
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "nodeType": "IndexAccess",
+                            "src": "4280:13:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          },
+                          "nodeType": "BinaryOperation",
+                          "operator": "==",
+                          "rightExpression": {
+                            "id": 704,
+                            "name": "id_",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 670,
+                            "src": "4297:3:1",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          },
+                          "src": "4280:20:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "id": 718,
+                        "nodeType": "IfStatement",
+                        "src": "4276:139:1",
+                        "trueBody": {
+                          "id": 717,
+                          "nodeType": "Block",
+                          "src": "4302:113:1",
+                          "statements": [
+                            {
+                              "expression": {
+                                "id": 708,
+                                "isConstant": false,
+                                "isLValue": false,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "leftHandSide": {
+                                  "id": 706,
+                                  "name": "found_",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 682,
+                                  "src": "4320:6:1",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_bool",
+                                    "typeString": "bool"
+                                  }
+                                },
+                                "nodeType": "Assignment",
+                                "operator": "=",
+                                "rightHandSide": {
+                                  "hexValue": "74727565",
+                                  "id": 707,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "kind": "bool",
+                                  "lValueRequested": false,
+                                  "nodeType": "Literal",
+                                  "src": "4329:4:1",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_bool",
+                                    "typeString": "bool"
+                                  },
+                                  "value": "true"
+                                },
+                                "src": "4320:13:1",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                }
+                              },
+                              "id": 709,
+                              "nodeType": "ExpressionStatement",
+                              "src": "4320:13:1"
+                            },
+                            {
+                              "expression": {
+                                "id": 714,
+                                "isConstant": false,
+                                "isLValue": false,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "leftHandSide": {
+                                  "id": 710,
+                                  "name": "customer_",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 688,
+                                  "src": "4351:9:1",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_struct$_Customer_$1017_memory_ptr",
+                                    "typeString": "struct Types.Customer memory"
+                                  }
+                                },
+                                "nodeType": "Assignment",
+                                "operator": "=",
+                                "rightHandSide": {
+                                  "baseExpression": {
+                                    "id": 711,
+                                    "name": "customers",
+                                    "nodeType": "Identifier",
+                                    "overloadedDeclarations": [],
+                                    "referencedDeclaration": 408,
+                                    "src": "4363:9:1",
+                                    "typeDescriptions": {
+                                      "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Customer_$1017_storage_$",
+                                      "typeString": "mapping(address => struct Types.Customer storage ref)"
+                                    }
+                                  },
+                                  "id": 713,
+                                  "indexExpression": {
+                                    "id": 712,
+                                    "name": "id_",
+                                    "nodeType": "Identifier",
+                                    "overloadedDeclarations": [],
+                                    "referencedDeclaration": 670,
+                                    "src": "4373:3:1",
+                                    "typeDescriptions": {
+                                      "typeIdentifier": "t_address",
+                                      "typeString": "address"
+                                    }
+                                  },
+                                  "isConstant": false,
+                                  "isLValue": true,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "nodeType": "IndexAccess",
+                                  "src": "4363:14:1",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_struct$_Customer_$1017_storage",
+                                    "typeString": "struct Types.Customer storage ref"
+                                  }
+                                },
+                                "src": "4351:26:1",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_struct$_Customer_$1017_memory_ptr",
+                                  "typeString": "struct Types.Customer memory"
+                                }
+                              },
+                              "id": 715,
+                              "nodeType": "ExpressionStatement",
+                              "src": "4351:26:1"
+                            },
+                            {
+                              "id": 716,
+                              "nodeType": "Break",
+                              "src": "4395:5:1"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  "condition": {
+                    "commonType": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    },
+                    "id": 697,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "id": 694,
+                      "name": "i",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 691,
+                      "src": "4234:1:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "<",
+                    "rightExpression": {
+                      "expression": {
+                        "id": 695,
+                        "name": "customers_",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 673,
+                        "src": "4238:10:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
+                          "typeString": "address[] memory"
+                        }
+                      },
+                      "id": 696,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "length",
+                      "nodeType": "MemberAccess",
+                      "src": "4238:17:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "4234:21:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 720,
+                  "initializationExpression": {
+                    "assignments": [
+                      691
+                    ],
+                    "declarations": [
+                      {
+                        "constant": false,
+                        "id": 691,
+                        "mutability": "mutable",
+                        "name": "i",
+                        "nameLocation": "4227:1:1",
+                        "nodeType": "VariableDeclaration",
+                        "scope": 720,
+                        "src": "4219:9:1",
+                        "stateVariable": false,
+                        "storageLocation": "default",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        "typeName": {
+                          "id": 690,
+                          "name": "uint256",
+                          "nodeType": "ElementaryTypeName",
+                          "src": "4219:7:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "visibility": "internal"
+                      }
+                    ],
+                    "id": 693,
+                    "initialValue": {
+                      "hexValue": "30",
+                      "id": 692,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "4231:1:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_0_by_1",
+                        "typeString": "int_const 0"
+                      },
+                      "value": "0"
+                    },
+                    "nodeType": "VariableDeclarationStatement",
+                    "src": "4219:13:1"
+                  },
+                  "loopExpression": {
+                    "expression": {
+                      "id": 699,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "UnaryOperation",
+                      "operator": "++",
+                      "prefix": false,
+                      "src": "4257:3:1",
+                      "subExpression": {
+                        "id": 698,
+                        "name": "i",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 691,
+                        "src": "4257:1:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "id": 700,
+                    "nodeType": "ExpressionStatement",
+                    "src": "4257:3:1"
+                  },
+                  "nodeType": "ForStatement",
+                  "src": "4214:211:1"
+                },
+                {
+                  "expression": {
+                    "components": [
+                      {
+                        "id": 721,
+                        "name": "found_",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 682,
+                        "src": "4442:6:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "id": 722,
+                        "name": "customer_",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 688,
+                        "src": "4450:9:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Customer_$1017_memory_ptr",
+                          "typeString": "struct Types.Customer memory"
+                        }
+                      }
+                    ],
+                    "id": 723,
+                    "isConstant": false,
+                    "isInlineArray": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "TupleExpression",
+                    "src": "4441:19:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$_t_bool_$_t_struct$_Customer_$1017_memory_ptr_$",
+                      "typeString": "tuple(bool,struct Types.Customer memory)"
+                    }
+                  },
+                  "functionReturnParameters": 680,
+                  "id": 724,
+                  "nodeType": "Return",
+                  "src": "4434:26:1"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 668,
+              "nodeType": "StructuredDocumentation",
+              "src": "3594:395:1",
+              "text": " @dev Search for customer details in the list that the bank is directly linked to\n @param id_ Customer's metamask Id\n @param customers_ Customer metamask Id's\n @return boolean to say if customer exists or not\n @return Customer object to get the complete details of the customer\n Costly operation if we had more customers linked to this single bank"
+            },
+            "id": 726,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "searchcustomers",
+            "nameLocation": "4003:15:1",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 674,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 670,
+                  "mutability": "mutable",
+                  "name": "id_",
+                  "nameLocation": "4027:3:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 726,
+                  "src": "4019:11:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 669,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4019:7:1",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 673,
+                  "mutability": "mutable",
+                  "name": "customers_",
+                  "nameLocation": "4049:10:1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 726,
+                  "src": "4032:27:1",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
+                    "typeString": "address[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 671,
+                      "name": "address",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "4032:7:1",
+                      "stateMutability": "nonpayable",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "id": 672,
+                    "nodeType": "ArrayTypeName",
+                    "src": "4032:9:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                      "typeString": "address[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4018:42:1"
+            },
+            "returnParameters": {
+              "id": 680,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 676,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 726,
+                  "src": "4108:4:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 675,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4108:4:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 679,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 726,
+                  "src": "4114:21:1",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Customer_$1017_memory_ptr",
+                    "typeString": "struct Types.Customer"
+                  },
+                  "typeName": {
+                    "id": 678,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 677,
+                      "name": "Types.Customer",
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 1017,
+                      "src": "4114:14:1"
+                    },
+                    "referencedDeclaration": 1017,
+                    "src": "4114:14:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Customer_$1017_storage_ptr",
+                      "typeString": "struct Types.Customer"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4107:29:1"
+            },
+            "scope": 727,
+            "src": "3994:473:1",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 728,
+        "src": "288:4181:1",
+        "usedErrors": []
+      }
+    ],
+    "src": "36:4434:1"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.12+commit.f00d7308.Emscripten.clang"
+  },
+  "networks": {
+    "5777": {
+      "events": {},
+      "links": {},
+      "address": "0xa29167DC282798ae3bf9f5E1A5d1DAc8bcaA8952",
+      "transactionHash": "0x74ba72b3c92446ae1f88f52c595f899816c58ad5b2dbdeb68aa6a0427bc6ab78"
+    }
+  },
+  "schemaVersion": "3.4.16",
+  "updatedAt": "2025-11-08T07:16:22.437Z",
+  "devdoc": {
+    "author": "Suresh Konakanchi",
+    "details": "Library for managing all customers, who are involved in the KYC process",
+    "kind": "dev",
+    "methods": {},
+    "title": "Customers",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
