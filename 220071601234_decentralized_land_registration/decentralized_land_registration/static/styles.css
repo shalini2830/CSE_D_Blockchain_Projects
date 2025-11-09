@@ -1,0 +1,112 @@
+/* Base */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f2f5;
+    color: #222;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container */
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    background: linear-gradient(145deg, #ffffff, #f7f9fb);
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+.container:hover {
+    transform: translateY(-3px);
+}
+
+/* Headings */
+h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #1a1a1a;
+    font-size: 28px;
+    letter-spacing: 0.5px;
+}
+
+/* Inputs */
+input, select {
+    padding: 10px 12px;
+    margin: 8px 0 16px 0;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+input:focus, select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+/* Buttons */
+button {
+    padding: 12px 20px;
+    margin-top: 12px;
+    cursor: pointer;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    background: linear-gradient(135deg, #4cafef, #007bff);
+    color: #fff;
+    transition: all 0.3s ease;
+}
+button:hover {
+    background: linear-gradient(135deg, #007bff, #4cafef);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
+}
+
+/* Alert Boxes */
+.warning-box {
+    background: #ffe6e6;
+    color: #b00020;
+    padding: 12px 15px;
+    margin-top: 12px;
+    border-left: 4px solid #b00020;
+    border-radius: 6px;
+    font-weight: 500;
+}
+.success-box {
+    background: #e6fff4;
+    color: #056608;
+    padding: 12px 15px;
+    margin-top: 12px;
+    border-left: 4px solid #056608;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+/* Preformatted Text */
+pre {
+    background: #1c1c1c;
+    color: #f7f7f7;
+    padding: 15px;
+    border-radius: 8px;
+    overflow: auto;
+    max-height: 400px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+        margin: 20px;
+    }
+    h1 {
+        font-size: 24px;
+    }
+    button {
+        width: 100%;
+    }
+}
